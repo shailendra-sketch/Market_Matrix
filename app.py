@@ -898,10 +898,11 @@ with gr.Blocks(title="Market Matrix — NIFTY 50 AI Dashboard") as demo:
     refresh_btn.click( fn=render_dashboard, inputs=[tf_dropdown], outputs=[dashboard_output])
 
 
-# Expose FastAPI for Vercel
+# Expose FastAPI app for Vercel
 app = FastAPI()
 app = gr.mount_gradio_app(app, demo, path="/")
 
+# Local development only
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 7860))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    import uvicorn
+    uvicorn.run("app:app", host="0.0.0.0", port=7860)
